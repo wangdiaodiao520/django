@@ -1,0 +1,25 @@
+{% extends 'login/base.html' %}
+{% block title %}投诉可视化{% endblock %}
+{% block content %}
+    {% if request.session.is_login %}
+    <p>投诉视图: <span id='result'></span></p>
+    <script>
+        $(document).ready(function(){
+          $("#sumbit").click(function(){
+            var cj = $("#cj").val();
+            var cx = $("#cx").val();
+            var bw = $("#bw").val();
+            var start = $("#start").val();
+            var end = $("#end").val();
+            var ly = $("#ly").val();
+
+            $.get("/complaints/",{'cj':cj,'cx':cx,'bw':bw,'start':start,'end':end,'ly':ly}, function(ret){
+                $('#result').html(ret)
+            })
+          });
+        });
+    </script>
+    {% else %}
+    <h1>尚未登录，无权访问！</h1>
+    {% endif %}
+{% endblock %}

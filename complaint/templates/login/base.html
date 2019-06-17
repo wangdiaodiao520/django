@@ -1,0 +1,78 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>{% block title %}base{% endblock %}</title>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui">
+    <script type="text/javascript " src="{% static 'js/main.js' %}"></script>
+    <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+    <link rel="stylesheet" href="https://jqueryui.com/jquery-wp-content/themes/jqueryui.com/style.css">
+    <script>
+    $(function() {
+      $( ".cxcalendar" ).datepicker({ dateFormat: 'yy-mm-dd',showAnim:"clip" });
+     });
+    </script>
+    <!-- Bootstrap -->
+    <link href="{% static 'bootstrap-3.3.7-dist/css/bootstrap.min.css' %}" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    {% block css %}{% endblock %}
+  </head>
+  <body>
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#my-nav" aria-expanded="false">
+            <span class="sr-only">切换导航条</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" >投诉可视化</a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="my-nav">
+          <ul class="nav navbar-nav navbar-right">
+            {% if request.session.is_login %}
+              <li><a>厂家：<input type="text" id="cj" size="3" ></a></li>
+              <li><a>车型：<input type="text" id="cx" size="3"></a></li>
+              <li><a>故障线索：<input type="text" id="bw"size="3"></a></li>
+              <li><a>开始时间：<input type="text" class = "cxcalendar" id="start"  size="3"></a></li>
+              <li><a>结束时间：<input type="text" class = "cxcalendar" id="end"  size="3"></a></li>
+              <li><a>数据来源：<select id="ly">
+                <option value="全部">全部</option>
+                <option value="车质网">车质网</option>
+                <option value="汽车投诉网">汽车投诉网</option>
+              </select></a></li>
+            <li><a><button type="button" id='sumbit'>提交</button><button onclick="window.location.href='/download/'">下载</button></a></li>
+
+              <li><a>欢迎：{{ request.session.user_name }}</a></li>
+              <li><a href="/logout/">注销</a></li>
+            {% else %}
+              <li><a href="/login/">登录</a></li>
+            {% endif %}
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+      <div></div>
+    </nav>
+
+ 
+    {% block content %}{% endblock %}
+ 
+
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="{% static 'bootstrap-3.3.7-dist/js/bootstrap.min.js' %}"></script>
+  </body>
+</html>
